@@ -1,4 +1,4 @@
-public class NoeudArbre<T> {
+public class NoeudArbre<T extends Comparable> {
 
     protected NoeudArbre<T> filsGauche;
     protected NoeudArbre<T> filsDroit;
@@ -50,16 +50,8 @@ public class NoeudArbre<T> {
         return filsGauche;
     }
 
-    public void setFilsGauche(NoeudArbre<T> filsGauche) {
-        this.filsGauche = filsGauche;
-    }
-
     public NoeudArbre<T> getFilsDroit() {
         return filsDroit;
-    }
-
-    public void setFilsDroit(NoeudArbre<T> filsDroit) {
-        this.filsDroit = filsDroit;
     }
 
     public T getValeur() {
@@ -68,5 +60,9 @@ public class NoeudArbre<T> {
 
     public void setValeur(T valeur) {
         this.valeur = valeur;
+    }
+
+    public String toString() {
+        return valeur.toString();
     }
 }

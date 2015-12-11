@@ -1,21 +1,53 @@
-public class NoeudABRI<T> extends NoeudArbre {
+public class NoeudABRI<T extends Comparable> extends NoeudArbre {
 
     protected NoeudABRI<T> filsGauche;
     protected NoeudABRI<T> filsDroit;
 
-    public void setFilsGauche(NoeudABRI<T> filsGauche) {
-        // TODO
+    public NoeudABRI (T pValeur) {
+        this.valeur = pValeur;
+    }
+
+/*    public void setFilsGauche(NoeudABRI<T> filsGauche) {
     }
 
     public void setFilsDroits(NoeudABRI<T> filsDroits) {
-        // TODO
+    }*/
+
+    public void ajouterNoeud(NoeudABRI<T> noeud) {
+        int value = this.valeur.compareTo(noeud.valeur);
+
+        if (value == 0) {
+
+        // Si la valeur du noeud courant est inférieure à la valeur du noeud à ajouter
+        } else if (value < 0 ) {
+
+            if (this.filsGauche == null) {
+                this.filsGauche = noeud;
+            } else {
+                this.filsGauche.ajouterNoeud(noeud);
+            }
+        // Si la valeur du noeud courant est supérieure à la valeur du noeud à ajouter
+        } else if (value > 0) {
+
+            if (this.filsDroit == null) {
+                this.filsDroit = noeud;
+            } else {
+                this.filsDroit.ajouterNoeud(noeud);
+            }
+        }
     }
 
-    public void ajouterNoeud() {
-        // TODO
+    @Override
+    public NoeudABRI<T> getFilsGauche() {
+        return filsGauche;
     }
 
-/*    protected int min;
+    @Override
+    public NoeudABRI<T> getFilsDroit() {
+        return filsDroit;
+    }
+
+    /*    protected int min;
     protected int max;
 
     public NoeudABRI(int min, int max) {
