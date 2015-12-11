@@ -1,5 +1,6 @@
 import javax.xml.transform.sax.SAXSource;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Main{
 
@@ -15,17 +16,16 @@ public class Main{
         BufferedReader br;
         br = new BufferedReader(new FileReader(new File(cheminFichier)));
 
-        NoeudAABRI[] tabAABRI = new NoeudAABRI[6];
-        int index=0;
+        ArrayList<NoeudAABRI> tabAABRI = new ArrayList<>();
 
+        String ligneCourante;
 
-        while (index<6) {
-            String ligne = br.readLine();
-            System.out.println(ligne);
+        while ((ligneCourante = br.readLine()) != null) {
+            System.out.println(ligneCourante);
 
 
             // Ligne correspondant à un noeud AABRI
-            String[] noeudAABRI = ligne.split(";");
+            String[] noeudAABRI = ligneCourante.split(";");
 
             // Valeurs min/max
             String[] stringValeursMinMax = noeudAABRI[0].split(":");
@@ -49,15 +49,13 @@ public class Main{
                 abri.ajouterNoeud(new NoeudABRI<>(valeursABRI[i]));
             }
 
-            tabAABRI[index] = new NoeudAABRI(valeursMinMax[0], valeursMinMax[1], abri);
-
-            index++;
+            tabAABRI.add(new NoeudAABRI(valeursMinMax[0], valeursMinMax[1], abri));
         }
 
-        NoeudAABRI aabri = tabAABRI[0];
+        NoeudAABRI aabri = tabAABRI.get(0);
 
-        for(int i=1;i<tabAABRI.length;i++) {
-            aabri.ajouterNoeud(tabAABRI[i]);
+        for(int i=1;i<tabAABRI.size();i++) {
+            aabri.ajouterNoeud(tabAABRI.get(i));
         }
 
         afficherAABRI(aabri);
