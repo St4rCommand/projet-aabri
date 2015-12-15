@@ -71,4 +71,14 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
         this.max = max;
     }*/
 
+    public String toString() {
+        String string = this.valeur.toString();
+
+        if (this.filsGauche != null)
+            string = string.concat(":"+this.filsGauche.toString());
+        if (this.filsDroit != null)
+            string = string.concat(":"+this.filsDroit.toString());
+
+        return string;
+    }
 }

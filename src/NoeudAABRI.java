@@ -54,4 +54,17 @@ public class NoeudAABRI {
     public NoeudAABRI getFilsDroit() {
         return filsDroit;
     }
+
+    public String toString() {
+        String string = this.min+":"+this.max+";"+this.valeur.toString()+"\n";
+
+        if (this.filsGauche != null)
+            string = string.concat(this.filsGauche.toString());
+
+        if (this.filsDroit != null)
+            string = string.concat(this.filsDroit.toString());
+
+
+        return string;
+    }
 }
