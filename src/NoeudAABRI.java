@@ -3,15 +3,15 @@ public class NoeudAABRI<T extends Comparable> {
     protected T min;
     protected T max;
 
-    protected NoeudAABRI filsGauche;
-    protected NoeudAABRI filsDroit;
+    protected NoeudAABRI<T> filsGauche;
+    protected NoeudAABRI<T> filsDroit;
 
-    protected NoeudABRI<T> valeur;
+    protected NoeudABRI<T> abri;
 
-    public NoeudAABRI(T min, T max, NoeudABRI<T> valeur) {
+    public NoeudAABRI(T min, T max, NoeudABRI<T> abri) {
         this.min = min;
         this.max = max;
-        this.valeur = valeur;
+        this.abri = abri;
     }
 
     public void ajouterNoeud(NoeudAABRI noeud) {
@@ -24,7 +24,7 @@ public class NoeudAABRI<T extends Comparable> {
             } else {
                 this.filsGauche.ajouterNoeud(noeud);
             }
-            // Si la valeur du noeud courant est supérieure à la valeur du noeud à ajouter
+            // Si la abri du noeud courant est supérieure à la abri du noeud à ajouter
         } else if (value < 0) {
 
             if (this.filsDroit == null) {
@@ -35,16 +35,17 @@ public class NoeudAABRI<T extends Comparable> {
         }
     }
 
-    public void insererEntier(T valeurABRI) {
-        int value = this.min.compareTo(valeur);
+    public void insererValeur(T valeur) {
+        int comparaisonMin = this.min.compareTo(valeur);
+        int comparaisonMax = this.max.compareTo(valeur);
 
 
-        if (valeurABRI >= this.min & valeurABRI <= this.max) {
-            this.valeur.ajouterNoeud(new NoeudABRI<Integer>(valeurABRI));
-        } else if (valeurABRI < min) {
-            this.filsGauche.insererEntier(valeurABRI);
-        } else if (valeurABRI > max) {
-            this.filsDroit.insererEntier(valeurABRI);
+        if (comparaisonMin <= 0 & comparaisonMax >= 0) {
+            this.abri.ajouterNoeud(new NoeudABRI<>(valeur));
+        } else if (comparaisonMin > 0) {
+            this.filsGauche.insererValeur(valeur);
+        } else if (comparaisonMax < 0) {
+            this.filsDroit.insererValeur(valeur);
         }
     }
 
@@ -81,8 +82,8 @@ public class NoeudAABRI<T extends Comparable> {
         return max;
     }
 
-    public NoeudABRI getValeur() {
-        return valeur;
+    public NoeudABRI getAbri() {
+        return abri;
     }
 
     public NoeudAABRI getFilsGauche() {
@@ -94,7 +95,7 @@ public class NoeudAABRI<T extends Comparable> {
     }
 
     public String toString() {
-        String string = this.min+":"+this.max+";"+this.valeur.toString()+"\n";
+        String string = this.min+":"+this.max+";"+this.abri.toString()+"\n";
 
         if (this.filsGauche != null)
             string = string.concat(this.filsGauche.toString());

@@ -76,7 +76,7 @@ public class Main{
                 abri.ajouterNoeud(new NoeudABRI<>(valeursABRI[i]));
             }
 
-            tabAABRI.add(new NoeudAABRI<NoeudABRI<Integer>>(valeursMinMax[0], valeursMinMax[1], abri));
+            tabAABRI.add(new NoeudAABRI<Integer>(valeursMinMax[0], valeursMinMax[1], abri));
         }
 
         NoeudAABRI aabri = tabAABRI.get(0);
@@ -188,12 +188,12 @@ public class Main{
 
 
     /*    public static void afficherABRI(NoeudABRI noeud) {
-        System.out.print(noeud.getValeur());
+        System.out.print(noeud.getAbri());
 
         // Afficher le fils gauche
         System.out.print(" - FG: ");
         if (noeud.getFilsGauche() != null) {
-            System.out.print(noeud.getFilsGauche().getValeur());
+            System.out.print(noeud.getFilsGauche().getAbri());
         } else {
             System.out.print("null");
         }
@@ -201,7 +201,7 @@ public class Main{
         // Afficher le fils droit
         System.out.print(" - FD: ");
         if (noeud.getFilsDroit() != null) {
-            System.out.print(noeud.getFilsDroit().getValeur());
+            System.out.print(noeud.getFilsDroit().getAbri());
         } else {
             System.out.print("null");
         }
@@ -235,7 +235,7 @@ public class Main{
         } else {
             System.out.println("null");
         }
-        afficherABRI(noeud.getValeur());
+        afficherABRI(noeud.getAbri());
 
         System.out.println();
         System.out.println();

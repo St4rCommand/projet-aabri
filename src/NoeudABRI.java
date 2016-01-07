@@ -3,8 +3,8 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
     protected NoeudABRI<T> filsGauche;
     protected NoeudABRI<T> filsDroit;
 
-    public NoeudABRI (T pValeur) {
-        this.valeur = pValeur;
+    public NoeudABRI (T valeur) {
+        this.valeur = valeur;
     }
 
 /*    public void setFilsGauche(NoeudABRI<T> filsGauche) {
@@ -15,8 +15,8 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
 
     /**
      * Insérer un noeud dans l'arbre où le sous-arbre
-     * La fonction ne fait rien si la valeur est déjà présente
-     * La fonction ne fait rien si la valeur
+     * La fonction ne fait rien si la abri est déjà présente
+     * La fonction ne fait rien si la abri
      *
      * @param noeud
      */
@@ -25,7 +25,7 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
 
         if (value == 0) {
 
-        // Si la valeur du noeud courant est inférieure à la valeur du noeud à ajouter
+        // Si la abri du noeud courant est inférieure à la abri du noeud à ajouter
         } else if (value < 0 ) {
 
             if (this.filsGauche == null) {
@@ -33,7 +33,7 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
             } else {
                 this.filsGauche.ajouterNoeud(noeud);
             }
-        // Si la valeur du noeud courant est supérieure à la valeur du noeud à ajouter
+        // Si la abri du noeud courant est supérieure à la abri du noeud à ajouter
         } else if (value > 0) {
 
             if (this.filsDroit == null) {
@@ -79,7 +79,7 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
     }*/
 
     /*public boolean isABRI(int min, int max) {
-        // TODO Vérifier que l'abri est un abri avec min<=valeur<=max
+        // TODO Vérifier que l'abri est un abri avec min<=abri<=max
 
         if (min>)
     }*/
