@@ -1,12 +1,12 @@
 //public class NoeudAABRI extends NoeudABR  {
-public class NoeudAABRI<C extends NoeudArbre> {
+public class NoeudAABRI<T extends Comparable> {
     protected T min;
     protected T max;
 
     protected NoeudAABRI filsGauche;
     protected NoeudAABRI filsDroit;
 
-    protected C<T> valeur;
+    protected NoeudABRI<T> valeur;
 
     public NoeudAABRI(T min, T max, NoeudABRI<T> valeur) {
         this.min = min;
