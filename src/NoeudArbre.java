@@ -33,7 +33,7 @@ public class NoeudArbre<T extends Comparable> {
     }
 
     public boolean isFeuille() {
-        return filsGauche == null && filsDroit == null;
+        return this.filsGauche == null & this.filsDroit == null;
     }
 
     public boolean isABR() {

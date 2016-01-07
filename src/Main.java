@@ -1,26 +1,82 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-
-import static java.lang.System.exit;
+import java.util.Scanner;
 
 public class Main{
 
     private static String fichierSource = "./jeux-d-essais/aabri1";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
-        NoeudAABRI aabri = null;
+        Scanner sc = new Scanner(System.in);
+
+        int saisie = -1;
+        boolean fin = false;
+
+        while (!fin) {
+
+            System.out.println(" === MENU ===");
+            System.out.println(" 1 - Fichier vers AABRI (avec affichage à l'écran)");
+            System.out.println(" 2 - AABRI vers fichier (avec affichage à l'écran)");
+            System.out.println(" 3 - Créer un AABRI aléatoire (enregistré dans le fichier aabriAleatoire.txt, avec affichage à l'écran)");
+            System.out.println(" 4 - Ajouter un noeud");
+            System.out.println(" 5 - Supprimer un noeud");
+
+
+            System.out.print("Choix : ");
+
+            try {
+                saisie = Integer.valueOf(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Veuillez saisir un nombre entre _ et _.");
+                saisie = -1;
+            }
+
+            switch (saisie) {
+                case 1:
+                    fichierVersAABRI();
+                    break;
+                case 2:
+                    aabriVersFichier();
+                    break;
+                case 3:
+                    aabriAleatoire();
+                    break;
+                case 4:
+                    ajouterNoeud();
+                    break;
+                case 5:
+                    supprimerNoeud();
+                    break;
+                case 0:
+                    fin = true;
+                    break;
+            }
+
+        }
+
+       /* NoeudAABRI aabri = null;
         try {
-            aabri = lireFichier(fichierSource);
+            aabri = NoeudAABRI.lireFichier(fichierSource);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         afficher(aabri);
 
-        ecrireFichier("sortie.txt", aabri);
+        // Test insertion valeur
+        aabri.insererValeur(15);
+        afficher(aabri);
+
+        // Test suppression valeur
+        if (! aabri.supprimerValeur(10)) {
+            System.out.println("Aucun n'interval ne correspond à cette valeur.");
+        }*/
+        //afficher(aabri);
+
+
+//        NoeudAABRI.ecrireFichierAABRI("sortie.txt", aabri);
 
         /*NoeudABRI abri = null;
         try {
@@ -30,117 +86,134 @@ public class Main{
         }
         System.out.println(abri.toString());*/
 
-        NoeudAABRI nouveauAABRI = null;
+        /*NoeudAABRI nouveauAABRI = null;
 
         try {
-            nouveauAABRI = creerAleatoirementAABRI(3, 30);
+            nouveauAABRI = NoeudAABRI.creerAleatoirementAABRI(3, 30);
         } catch (Exception e) {
             e.printStackTrace();
         }
         afficher(nouveauAABRI);
-        ecrireFichier("nouveau.txt", nouveauAABRI);
+        NoeudAABRI.ecrireFichierAABRI("nouveau.txt", nouveauAABRI);*/
 
     }
 
-    public static NoeudAABRI lireFichier(String fichier) throws IOException {
+    public static void fichierVersAABRI() {
+        String fichier = "";
+        Scanner sc = new Scanner(System.in);
 
-        BufferedReader br;
-        br = new BufferedReader(new FileReader(new File(fichier)));
+        System.out.print("Nom du fichier à charger : ");
+        fichier = sc.nextLine();
 
-        ArrayList<NoeudAABRI> tabAABRI = new ArrayList<>();
+        try {
+            NoeudAABRI aabri = NoeudAABRI.lireFichier(fichier);
+            afficher(aabri);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Aucun fichier trouvé.");
+        }
+    }
 
-        String ligneCourante;
+    public static void aabriVersFichier() {
+        String fichierSource = "";
+        String fichierDestination = "";
+        Scanner sc = new Scanner(System.in);
 
-        while ((ligneCourante = br.readLine()) != null) {
+        System.out.print("Nom du fichier à charger : ");
+        fichierSource = sc.nextLine();
 
-            // Ligne correspondant à un noeud AABRI
-            String[] noeudAABRI = ligneCourante.split(";");
+        System.out.print("Emplacement et nom du fichier destination : ");
+        fichierDestination = sc.nextLine();
 
-            // Valeurs min/max
-            String[] stringValeursMinMax = noeudAABRI[0].split(":");
-            int[] valeursMinMax = new int[stringValeursMinMax.length];
-            for (int i = 0; i < stringValeursMinMax.length; i++) {
-                valeursMinMax[i] = Integer.parseInt(stringValeursMinMax[i]);
+        try {
+            NoeudAABRI aabri = NoeudAABRI.lireFichier(fichierSource);
+            afficher(aabri);
+            NoeudAABRI.ecrireFichierAABRI(fichierDestination,aabri);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Aucun fichier trouvé.");
+        }
+    }
+
+    public static void aabriAleatoire() throws Exception {
+        int nbNoeuds;
+        int valeurMax;
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Nombre de noeuds : ");
+        nbNoeuds = Integer.valueOf(sc.nextLine());
+
+        System.out.print("Valeur maximum : ");
+        valeurMax = Integer.valueOf(sc.nextLine());
+
+        NoeudAABRI aabri = NoeudAABRI.creerAleatoirementAABRI(3, 30);
+
+        afficher(aabri);
+        NoeudAABRI.ecrireFichierAABRI("aabriAleatoire.txt",aabri);
+    }
+
+    public static void ajouterNoeud() {
+        String fichier = "";
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Nom du fichier à charger : ");
+        fichier = sc.nextLine();
+
+        NoeudAABRI aabri;
+        try {
+            aabri = NoeudAABRI.lireFichier(fichier);
+            afficher(aabri);
+
+            System.out.print("Valeur à ajouter : ");
+            int valeur = Integer.valueOf(sc.nextLine());
+
+
+            if (! aabri.insererValeur(valeur)) {
+                System.out.println("Aucun interval ne correspond pour l'insertion.");
             }
 
-            // Valeurs ABRI
-            String[] stringValeursABRI = noeudAABRI[1].split(":");
-            int[] valeursABRI = new int[stringValeursABRI.length];
-            for (int i = 0; i < stringValeursABRI.length; i++) {
-                valeursABRI[i] = Integer.parseInt(stringValeursABRI[i]);
-            }
-
-            NoeudABRI<Integer> abri = new NoeudABRI<>(valeursABRI[0]);
-
-            for (int i = 1; i < valeursABRI.length; i++) {
-                abri.ajouterNoeud(new NoeudABRI<>(valeursABRI[i]));
-            }
-
-            tabAABRI.add(new NoeudAABRI<Integer>(valeursMinMax[0], valeursMinMax[1], abri));
+            afficher(aabri);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Aucun fichier trouvé.");
         }
 
-        NoeudAABRI aabri = tabAABRI.get(0);
+    }
 
-        for(int i=1;i<tabAABRI.size();i++) {
-            aabri.ajouterNoeud(tabAABRI.get(i));
+    public static void supprimerNoeud() {
+        String fichier = "";
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Nom du fichier à charger : ");
+        fichier = sc.nextLine();
+
+        NoeudAABRI aabri;
+        try {
+            aabri = NoeudAABRI.lireFichier(fichier);
+            afficher(aabri);
+
+            System.out.print("Valeur à supprimer : ");
+            int valeur = Integer.valueOf(sc.nextLine());
+
+
+            if (! aabri.supprimerValeur(valeur)) {
+                System.out.println("Aucun interval ne correspond à cette valeur.");
+            }
+
+            afficher(aabri);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Aucun fichier trouvé.");
         }
-
-        br.close();
-
-        return aabri;
     }
 
     public static void afficher(NoeudAABRI noeud) {
         System.out.println(noeud.toString());
     }
 
-    public static void ecrireFichier(String nomFichier, NoeudAABRI aabri) {
-
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(nomFichier)));
-            bw.write(aabri.toString());
-            bw.flush();
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
-    }
 
-    public static NoeudAABRI creerAleatoirementAABRI(int nbNoeuds, int max) throws Exception {
-
-        int[] intervalles = tableauTrie(1,max,nbNoeuds*2);
-        System.out.println(Arrays.toString(intervalles));
-        NoeudAABRI aabri = new NoeudAABRI(intervalles[0], intervalles[1], creerAleatoirementABRI(intervalles[0],intervalles[1]));
-
-        for (int i=2;i<(nbNoeuds*2);i+=2){
-            aabri.ajouterNoeud(new NoeudAABRI(intervalles[i], intervalles[i+1], creerAleatoirementABRI(intervalles[i],intervalles[i+1])));
-        }
-
-        return aabri;
-    }
-
-    public static NoeudABRI creerAleatoirementABRI(int min, int max) throws Exception {
-        if (min >= max)
-            throw new Exception("Max doit être supérieur à min ("+min+">="+max+").");
-
-        Random rand = new Random();
-        int nbValeurs = 0;
-
-        while (nbValeurs == 0) {
-            nbValeurs = rand.nextInt(max+1-min)+min;
-        }
-
-        NoeudABRI abri = new NoeudABRI(rand.nextInt(max+1-min)+min);
-        nbValeurs--;
-
-        for(int i=nbValeurs;i>0;i--) {
-            abri.ajouterNoeud(new NoeudABRI(rand.nextInt(max+1-min)+min));
-        }
-
-        return abri;
-    }
 
     public static int[] tableauTrie(int min, int max, int nbValeurs) throws Exception {
 
@@ -158,9 +231,6 @@ public class Main{
 
             // TODO la méthode binarysearch ne répond pas à notre problème
             if(nouvelleValeur > 0 & Arrays.binarySearch(tableauTrie, nouvelleValeur) < 0) {
-                if (Arrays.binarySearch(tableauTrie, nouvelleValeur) >= 0) {
-                    System.out.println("tu te fous de ma gueule");
-                }
                 tableauTrie[nbValeursCrees] = nouvelleValeur;
                 nbValeursCrees++;
             }
@@ -171,9 +241,6 @@ public class Main{
         return tableauTrie;
     }
 
-    public static void isAABRI() {
-        // TODO
-    }
 
 
 
@@ -187,13 +254,14 @@ public class Main{
 
 
 
-    /*    public static void afficherABRI(NoeudABRI noeud) {
-        System.out.print(noeud.getAbri());
+
+        public static void afficherABRI(NoeudABRI noeud) {
+        System.out.print(noeud);
 
         // Afficher le fils gauche
         System.out.print(" - FG: ");
         if (noeud.getFilsGauche() != null) {
-            System.out.print(noeud.getFilsGauche().getAbri());
+            System.out.print(noeud.getFilsGauche());
         } else {
             System.out.print("null");
         }
@@ -201,7 +269,7 @@ public class Main{
         // Afficher le fils droit
         System.out.print(" - FD: ");
         if (noeud.getFilsDroit() != null) {
-            System.out.print(noeud.getFilsDroit().getAbri());
+            System.out.print(noeud.getFilsDroit());
         } else {
             System.out.print("null");
         }
@@ -247,5 +315,5 @@ public class Main{
         if (noeud.getFilsDroit() != null) {
             afficherAABRI(noeud.getFilsDroit());
         }
-    }*/
+    }
 }

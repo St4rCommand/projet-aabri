@@ -1,7 +1,9 @@
+import java.util.Random;
+
 public class NoeudABRI<T extends Comparable> extends NoeudArbre {
 
-    protected NoeudABRI<T> filsGauche;
-    protected NoeudABRI<T> filsDroit;
+    protected NoeudABRI<T> filsGauche = null;
+    protected NoeudABRI<T> filsDroit = null;
 
     public NoeudABRI (T valeur) {
         this.valeur = valeur;
@@ -41,6 +43,64 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
             } else {
                 this.filsDroit.ajouterNoeud(noeud);
             }
+        }
+    }
+
+    public boolean supprimerValeur(T valeur) {
+        int value = this.valeur.compareTo(valeur);
+
+//        System.out.println(this.valeur);
+
+        if (this.filsDroit != null && value > 0) {
+
+            if (this.filsDroit.getValeur() == valeur && this.filsDroit.getFilsGauche() == null && this.filsDroit.getFilsDroit() == null) {
+                this.filsDroit = null;
+                return true;
+            } else {
+                return this.filsDroit.supprimerValeur(valeur);
+            }
+
+
+        } else if (this.filsGauche != null && value < 0) {
+
+            if (this.filsGauche.getValeur() == valeur && this.filsGauche.getFilsGauche() == null && this.filsGauche.getFilsDroit() == null) {
+                this.filsGauche = null;
+                return true;
+            } else {
+                return this.filsGauche.supprimerValeur(valeur);
+            }
+
+        } else if (value == 0) {
+            if (this.filsDroit == null && this.filsGauche != null) {
+
+                this.valeur = this.filsGauche.getValeur();
+                this.filsDroit = this.filsGauche.getFilsDroit();
+                this.filsGauche = this.filsGauche.getFilsGauche();
+
+            } else if (this.filsGauche == null && this.filsDroit != null) {
+
+                this.valeur = this.filsDroit.getValeur();
+                this.filsGauche = this.filsDroit.getFilsGauche();
+                this.filsDroit = this.filsDroit.getFilsDroit();
+
+            } else if (this.filsGauche != null && this.filsDroit != null) {
+                this.filsDroit.supprimerMaxValeur(valeur);
+                this.valeur = valeur;
+
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    public void supprimerMaxValeur(T valeur) {
+        if (this.getFilsGauche() == null) {
+            this.valeur = this.filsDroit.getValeur();
+            this.filsGauche = this.filsDroit.getFilsGauche();
+            this.filsDroit = this.filsDroit.getFilsDroit();
+        } else {
+            supprimerMaxValeur(valeur);
         }
     }
 
@@ -93,5 +153,26 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
             string = string.concat(":"+this.filsDroit.toString());
 
         return string;
+    }
+
+    public static NoeudABRI creerAleatoirementABRI(int min, int max) throws Exception {
+        if (min >= max)
+            throw new Exception("Max doit être supérieur à min ("+min+">="+max+").");
+
+        Random rand = new Random();
+        int nbValeurs = 0;
+
+        while (nbValeurs == 0) {
+            nbValeurs = rand.nextInt(max+1-min)+min;
+        }
+
+        NoeudABRI abri = new NoeudABRI(rand.nextInt(max+1-min)+min);
+        nbValeurs--;
+
+        for(int i=nbValeurs;i>0;i--) {
+            abri.ajouterNoeud(new NoeudABRI(rand.nextInt(max+1-min)+min));
+        }
+
+        return abri;
     }
 }
