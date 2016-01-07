@@ -1,14 +1,14 @@
 //public class NoeudAABRI extends NoeudABR  {
-public class NoeudAABRI {
-    protected Integer min;
-    protected Integer max;
+public class NoeudAABRI<C extends NoeudArbre> {
+    protected T min;
+    protected T max;
 
     protected NoeudAABRI filsGauche;
     protected NoeudAABRI filsDroit;
 
-    protected NoeudABRI valeur;
+    protected C<T> valeur;
 
-    public NoeudAABRI(int min, int max, NoeudABRI valeur) {
+    public NoeudAABRI(T min, T max, NoeudABRI<T> valeur) {
         this.min = min;
         this.max = max;
         this.valeur = valeur;
@@ -35,11 +35,49 @@ public class NoeudAABRI {
         }
     }
 
-    public int getMin() {
+    public void insererEntier(T valeurABRI) {
+        int value = this.min.compareTo(valeur);
+
+
+        if (valeurABRI >= this.min & valeurABRI <= this.max) {
+            this.valeur.ajouterNoeud(new NoeudABRI<Integer>(valeurABRI));
+        } else if (valeurABRI < min) {
+            this.filsGauche.insererEntier(valeurABRI);
+        } else if (valeurABRI > max) {
+            this.filsDroit.insererEntier(valeurABRI);
+        }
+    }
+
+
+    /*public boolean isAABRI(){
+
+        return isAABRI(0,0);
+    }*/
+
+    /*
+    private boolean isAABRI(int minPrec, int maxPrec){
+
+        boolean isAABRI = true;
+
+        if (this.min <= minPrec) {
+            isAABRI = false;
+        }
+
+        if ()
+
+        // ABR (sur les valeurs min)
+
+        // interval min/max disjoints
+        // ABRI est un ABRI
+
+        return false;
+    }*/
+
+    public T getMin() {
         return min;
     }
 
-    public int getMax() {
+    public T getMax() {
         return max;
     }
 

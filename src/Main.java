@@ -76,7 +76,7 @@ public class Main{
                 abri.ajouterNoeud(new NoeudABRI<>(valeursABRI[i]));
             }
 
-            tabAABRI.add(new NoeudAABRI(valeursMinMax[0], valeursMinMax[1], abri));
+            tabAABRI.add(new NoeudAABRI<NoeudABRI<Integer>>(valeursMinMax[0], valeursMinMax[1], abri));
         }
 
         NoeudAABRI aabri = tabAABRI.get(0);

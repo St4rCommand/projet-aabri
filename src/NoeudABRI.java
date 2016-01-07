@@ -13,6 +13,13 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
     public void setFilsDroits(NoeudABRI<T> filsDroits) {
     }*/
 
+    /**
+     * Insérer un noeud dans l'arbre où le sous-arbre
+     * La fonction ne fait rien si la valeur est déjà présente
+     * La fonction ne fait rien si la valeur
+     *
+     * @param noeud
+     */
     public void ajouterNoeud(NoeudABRI<T> noeud) {
         int value = this.valeur.compareTo(noeud.valeur);
 
@@ -69,6 +76,12 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
 
     public void setMax(int max) {
         this.max = max;
+    }*/
+
+    /*public boolean isABRI(int min, int max) {
+        // TODO Vérifier que l'abri est un abri avec min<=valeur<=max
+
+        if (min>)
     }*/
 
     public String toString() {
