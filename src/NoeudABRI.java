@@ -9,12 +9,6 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
         this.valeur = valeur;
     }
 
-/*    public void setFilsGauche(NoeudABRI<T> filsGauche) {
-    }
-
-    public void setFilsDroits(NoeudABRI<T> filsDroits) {
-    }*/
-
     /**
      * Insérer un noeud dans l'arbre où le sous-arbre
      * La fonction ne fait rien si la abri est déjà présente
@@ -46,10 +40,14 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
         }
     }
 
+    /**
+     * Supprimer une valeur d'un ABRI
+     *
+     * @param valeur
+     * @return
+     */
     public boolean supprimerValeur(T valeur) {
         int value = this.valeur.compareTo(valeur);
-
-//        System.out.println(this.valeur);
 
         if (this.filsDroit != null && value > 0) {
 
@@ -94,7 +92,12 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
         return false;
     }
 
-    public void supprimerMaxValeur(T valeur) {
+    /**
+     * Supprimer une valeur d'un ABRI
+     *
+     * @param valeur
+     */
+    private void supprimerMaxValeur(T valeur) {
         if (this.getFilsGauche() == null) {
             this.valeur = this.filsDroit.getValeur();
             this.filsGauche = this.filsDroit.getFilsGauche();
@@ -114,36 +117,6 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
         return filsDroit;
     }
 
-    /*    protected int min;
-    protected int max;
-
-    public NoeudABRI(int min, int max) {
-        this.min = min;
-        this.max = max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public void setMin(int min) {
-        this.min = min;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public void setMax(int max) {
-        this.max = max;
-    }*/
-
-    /*public boolean isABRI(int min, int max) {
-        // TODO Vérifier que l'abri est un abri avec min<=abri<=max
-
-        if (min>)
-    }*/
-
     public String toString() {
         String string = this.valeur.toString();
 
@@ -155,6 +128,14 @@ public class NoeudABRI<T extends Comparable> extends NoeudArbre {
         return string;
     }
 
+    /**
+     * Créer un ABRI aléatoire
+     *
+     * @param min
+     * @param max
+     * @return
+     * @throws Exception
+     */
     public static NoeudABRI creerAleatoirementABRI(int min, int max) throws Exception {
         if (min >= max)
             throw new Exception("Max doit être supérieur à min ("+min+">="+max+").");

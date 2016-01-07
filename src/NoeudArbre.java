@@ -13,39 +13,6 @@ public class NoeudArbre<T extends Comparable> {
         this.filsGauche = filsGauche;
     }
 
-    public T[] parcoursInfixe() {
-        // TODO
-        return null;
-    }
-
-    public T[] parcoursSuffixe() {
-        // TODO
-        return null;
-    }
-
-    public T[] parcoursPostfix() {
-        // TODO
-        return null;
-    }
-
-    public void noeudPresent(NoeudArbre noeudArbre) {
-        // TODO
-    }
-
-    public boolean isFeuille() {
-        return this.filsGauche == null & this.filsDroit == null;
-    }
-
-    public boolean isABR() {
-        // TODO
-        return true;
-    }
-
-    public boolean isABRI() {
-        // TODO
-        return true;
-    }
-
     public NoeudArbre<T> getFilsGauche() {
         return filsGauche;
     }
@@ -56,10 +23,6 @@ public class NoeudArbre<T extends Comparable> {
 
     public T getValeur() {
         return valeur;
-    }
-
-    public void setValeur(T valeur) {
-        this.valeur = valeur;
     }
 
     public String toString() {

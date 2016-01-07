@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 //public class NoeudAABRI extends NoeudABR  {
 public class NoeudAABRI<T extends Comparable> {
@@ -18,6 +19,11 @@ public class NoeudAABRI<T extends Comparable> {
         this.abri = abri;
     }
 
+    /**
+     * Ajouter un noeud dans l'AABRI
+     *
+     * @param noeud
+     */
     public void ajouterNoeud(NoeudAABRI noeud) {
         int value = this.min.compareTo(noeud.getMin());
 
@@ -39,6 +45,12 @@ public class NoeudAABRI<T extends Comparable> {
         }
     }
 
+    /**
+     * Insérer une valeur dans l'AABRI
+     *
+     * @param valeur
+     * @return
+     */
     public boolean insererValeur(T valeur) {
         int comparaisonMin = this.min.compareTo(valeur);
         int comparaisonMax = this.max.compareTo(valeur);
@@ -56,6 +68,12 @@ public class NoeudAABRI<T extends Comparable> {
         return false;
     }
 
+    /**
+     * Supprimer une valeur dans l'AABRI
+     *
+     * @param valeur
+     * @return
+     */
     public boolean supprimerValeur(T valeur) {
         int comparaisonMin = this.min.compareTo(valeur);
         int comparaisonMax = this.max.compareTo(valeur);
@@ -75,49 +93,8 @@ public class NoeudAABRI<T extends Comparable> {
         return false;
     }
 
-
-    /*public boolean isAABRI(){
-
-        return isAABRI(0,0);
-    }*/
-
-    /*
-    private boolean isAABRI(int minPrec, int maxPrec){
-
-        boolean isAABRI = true;
-
-        if (this.min <= minPrec) {
-            isAABRI = false;
-        }
-
-        if ()
-
-        // ABR (sur les valeurs min)
-
-        // interval min/max disjoints
-        // ABRI est un ABRI
-
-        return false;
-    }*/
-
     public T getMin() {
         return min;
-    }
-
-    public T getMax() {
-        return max;
-    }
-
-    public NoeudABRI getAbri() {
-        return abri;
-    }
-
-    public NoeudAABRI getFilsGauche() {
-        return filsGauche;
-    }
-
-    public NoeudAABRI getFilsDroit() {
-        return filsDroit;
     }
 
     public String toString() {
@@ -133,6 +110,14 @@ public class NoeudAABRI<T extends Comparable> {
         return string;
     }
 
+    /**
+     * Lire un fichier pour charger un AABRI
+     * Le AABRI chargé est obligatoirement correct
+     *
+     * @param fichier
+     * @return
+     * @throws IOException
+     */
     public static NoeudAABRI lireFichier(String fichier) throws IOException {
 
         BufferedReader br;
@@ -181,23 +166,39 @@ public class NoeudAABRI<T extends Comparable> {
         return aabri;
     }
 
+    /**
+     * Créer un AABRI aléatoire
+     *
+     * @param nbNoeuds
+     * @param max
+     * @return
+     * @throws Exception
+     */
     public static NoeudAABRI creerAleatoirementAABRI(int nbNoeuds, int max) throws Exception {
 
-        int[] intervalles = Main.tableauTrie(1,max,nbNoeuds*2);
-        System.out.println(Arrays.toString(intervalles));
-        NoeudAABRI aabri = new NoeudAABRI(intervalles[0], intervalles[1], NoeudABRI.creerAleatoirementABRI(intervalles[0],intervalles[1]));
+        if (nbNoeuds > max)
+            throw new Exception();
+
+        List<Integer> intervalles = Main.tableauTrie(1,max,nbNoeuds*2);
+
+
+
+        System.out.println(intervalles.toString());
+        NoeudAABRI aabri = new NoeudAABRI(intervalles.get(0), intervalles.get(1), NoeudABRI.creerAleatoirementABRI(intervalles.get(0),intervalles.get(1)));
 
         for (int i=2;i<(nbNoeuds*2);i+=2){
-            aabri.ajouterNoeud(new NoeudAABRI(intervalles[i], intervalles[i+1], NoeudABRI.creerAleatoirementABRI(intervalles[i],intervalles[i+1])));
+            aabri.ajouterNoeud(new NoeudAABRI(intervalles.get(i), intervalles.get(i+1), NoeudABRI.creerAleatoirementABRI(intervalles.get(i),intervalles.get(i+1))));
         }
 
         return aabri;
     }
 
-    public static void isAABRI() {
-        // TODO
-    }
-
+    /**
+     * Ecrire un AABRI dans un fichier
+     *
+     * @param nomFichier
+     * @param aabri
+     */
     public static void ecrireFichierAABRI(String nomFichier, NoeudAABRI aabri) {
 
         try {
